@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
@@ -79,9 +79,15 @@ function NavBar() {
                   <ListItemText primary="Payroll Notifications" />
                 </ListItemButton>
               )}
+              {user.role === 'Admin' && (
+                <ListItemButton sx={{ pl: 4 }} component={RouterLink} to="/" onClick={closeMenus}>
+                  <ListItemText primary="DashBoard" />
+                </ListItemButton>
+              )}
+
             </List>
           </Collapse>
-          <Collapse in={openInvoice} timeout="auto" unmountOnExit sx={{ position: 'absolute', zIndex: 1, width: '100%', bgcolor: '#124E66', top: 48 }}>
+          <Collapse in={openInvoice} timeout="auto" unmountOnExit sx={{ position: 'absolute', zIndex: 1, width: '100%', bgcolor: '#124E66' }}>
             <List component="div" disablePadding>
               {user.role === 'Admin' && (
                 <ListItemButton sx={{ pl: 4 }} component={RouterLink} to="/invoice-entry" onClick={closeMenus}>
@@ -95,12 +101,17 @@ function NavBar() {
               )}
               {user.role === 'Admin' && (
                 <ListItemButton sx={{ pl: 4 }} component={RouterLink} to="/sales-notifications" onClick={closeMenus}>
-                  <ListItemText primary ="Sales Notifications" />
+                  <ListItemText primary="Sales Notifications" />
                 </ListItemButton>
               )}
               {user.role === 'Admin' && (
                 <ListItemButton sx={{ pl: 4 }} component={RouterLink} to="/customer-invoice" onClick={closeMenus}>
                   <ListItemText primary="Customer Invoice" />
+                </ListItemButton>
+              )}
+              {user.role === 'Admin' && (
+                <ListItemButton sx={{ pl: 4 }} component={RouterLink} to="/" onClick={closeMenus}>
+                  <ListItemText primary="DashBoard" />
                 </ListItemButton>
               )}
             </List>
@@ -112,32 +123,32 @@ function NavBar() {
 }
 
 function App() {
-    return (
-        <AuthProvider>
-            <Router>
-                <div>
-                    <NavBar />
-                    <Routes>
-                        {/* Authentication */}
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/" element={<PrivateRoute allowedRoles={['Admin']}><Dashboard /></PrivateRoute>} />
-                        {/* Payroll Tab Routes */}
-                        <Route path="/payroll-entry" element={<PrivateRoute allowedRoles={['Admin']}><PayrollEntry /></PrivateRoute>} />
-                        <Route path="/payroll-details" element={<PrivateRoute allowedRoles={['Admin']}><PayrollDetails /></PrivateRoute>} />
-                        <Route path="/payslip" element={<PrivateRoute allowedRoles={['Employee', 'Admin']}><Payslip /></PrivateRoute>} />
-                        <Route path="/payroll-notifications" element={<PrivateRoute allowedRoles={['Admin']}><PayrollNotifications /></PrivateRoute>} />
-                        
-                        {/* Invoice Tab Routes */}
-                        <Route path="/invoice-entry" element={<PrivateRoute allowedRoles={['Admin']}><InvoiceEntry /></PrivateRoute>} />
-                        <Route path="/invoice-details" element={<PrivateRoute allowedRoles={['Admin']}><InvoiceDetails /></PrivateRoute>} />
-                        <Route path="/customer-invoice" element={<PrivateRoute allowedRoles={['Admin']}><CustomerInvoice /></PrivateRoute>} />
-                        <Route path="/sales-notifications" element={<PrivateRoute allowedRoles={['Admin']}><SalesNotifications /></PrivateRoute>} />
-                        
-                    </Routes>
-                </div>
-            </Router>
-        </AuthProvider>
-    );
+  return (
+    <AuthProvider>
+      <Router>
+        <div>
+          <NavBar />
+          <Routes>
+            {/* Authentication */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<PrivateRoute allowedRoles={['Admin']}><Dashboard /></PrivateRoute>} />
+            {/* Payroll Tab Routes */}
+            <Route path="/payroll-entry" element={<PrivateRoute allowedRoles={['Admin']}><PayrollEntry /></PrivateRoute>} />
+            <Route path="/payroll-details" element={<PrivateRoute allowedRoles={['Admin']}><PayrollDetails /></PrivateRoute>} />
+            <Route path="/payslip" element={<PrivateRoute allowedRoles={['Employee', 'Admin']}><Payslip /></PrivateRoute>} />
+            <Route path="/payroll-notifications" element={<PrivateRoute allowedRoles={['Admin']}><PayrollNotifications /></PrivateRoute>} />
+
+            {/* Invoice Tab Routes */}
+            <Route path="/invoice-entry" element={<PrivateRoute allowedRoles={['Admin']}><InvoiceEntry /></PrivateRoute>} />
+            <Route path="/invoice-details" element={<PrivateRoute allowedRoles={['Admin']}><InvoiceDetails /></PrivateRoute>} />
+            <Route path="/customer-invoice" element={<PrivateRoute allowedRoles={['Admin']}><CustomerInvoice /></PrivateRoute>} />
+            <Route path="/sales-notifications" element={<PrivateRoute allowedRoles={['Admin']}><SalesNotifications /></PrivateRoute>} />
+
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
+  );
 }
 
 export default App;

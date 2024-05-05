@@ -271,7 +271,7 @@ function PayrollEntry() {
                             Net Pay: {formData.netPay.toFixed(2)}
                         </Typography>
                     )}
-                    <Button onClick={handleSave && handleStatus} color="secondary" variant="contained" style={{ marginTop: '20px' }}>Save</Button>
+                    <Button onClick={handleSave} color="secondary" variant="contained" style={{ marginTop: '20px' }}>Save</Button>
                     <Button onClick={handleUpdate} color="primary" variant="contained" style={{ marginTop: '20px', marginLeft: '10px' }}>Update</Button>
                     <Button onClick={handleClear} color="primary" variant="contained" style={{ marginTop: '20px', marginLeft: '10px' }}>Clear</Button>
 
