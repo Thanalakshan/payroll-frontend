@@ -36,7 +36,7 @@ function Payslip() {
     useEffect(() => {
         const fetchPayslips = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/payroll/employee/${user.id}`, {
+                const response = await axios.get(`http://localhost:8090/api/payroll/employee/${user.id}`, {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
                 setPayslips(response.data);
@@ -52,7 +52,7 @@ function Payslip() {
 
     const handleDownload = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/payroll/download/${user.id}`, {
+            const response = await axios.get(`http://localhost:8090/api/payroll/download/${user.id}`, {
                 responseType: 'blob', // Important for handling binary data
                 headers: { Authorization: `Bearer ${user.token}` }
             });
@@ -69,25 +69,29 @@ function Payslip() {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Date</TableCell>
+                            <TableCell style={{ color: theme.palette.text.primary }}>Payroll ID</TableCell>
                             <TableCell style={{ color: theme.palette.text.primary }}>Employee ID</TableCell>
                             <TableCell style={{ color: theme.palette.text.primary }}>Employee Name</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Gross Pay</TableCell>
+                            <TableCell style={{ color: theme.palette.text.primary }}>Basic Salary</TableCell>
+                            {/* <TableCell style={{ color: theme.palette.text.primary }}>Gross Pay</TableCell> */}
                             <TableCell style={{ color: theme.palette.text.primary }}>Net Pay</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Details</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Status</TableCell>
+                            <TableCell style={{ color: theme.palette.text.primary }}>Payroll Date</TableCell>
+                            <TableCell style={{ color: theme.palette.text.primary }}>Payroll Start Date</TableCell>
+                            <TableCell style={{ color: theme.palette.text.primary }}>Payroll End Date</TableCell>     
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {payslips.map((payslip, index) => (
                             <TableRow key={index}>
-                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.date}</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.payrollId}</TableCell>
                                 <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.employeeId}</TableCell>
                                 <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.employeeName}</TableCell>
-                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.grossPay}</TableCell>
-                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.netPay}</TableCell>
-                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.details}</TableCell>
-                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.status}</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.basicSalary.toFixed(2)}</TableCell>
+                                {/* <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.grosspay}</TableCell> */}
+                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.netay.toFixed(2)}</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.payrollDate}</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.payrollStartDate}</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.payrollEndDate}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

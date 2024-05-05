@@ -42,7 +42,7 @@ function PayrollDetails() {
 
     const handleDelete = (id) => {
         deletePayroll(id).then(() => {
-            setPayrolls(payrolls.filter(p => p.id !== id));
+            setPayrolls(payrolls.filter(p => p.payrollId !== id));
         }).catch(error => console.error('Failed to delete payroll', error));
     };
 
@@ -93,29 +93,32 @@ function PayrollDetails() {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>ID</TableCell>
+                                <TableCell>Payroll ID</TableCell>
+                                <TableCell>Employee ID</TableCell>
                                 <TableCell>Employee Name</TableCell>
-                                <TableCell>Net Pay</TableCell>
-                                <TableCell>Benefits</TableCell>
-                                <TableCell>Deductions</TableCell>
                                 <TableCell>Basic Salary</TableCell>
-                                <TableCell>Overtime Salary</TableCell>
+                                <TableCell>Allowance</TableCell>
+                                <TableCell>Deductions</TableCell>
+                                <TableCell>Net Pay</TableCell>
+                                <TableCell>Payroll Date</TableCell>
                                 <TableCell>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {payrolls.map(payroll => (
-                                <TableRow key={payroll.id}>
+                                <TableRow key={payroll.payrollId}>
+                                    <TableCell>{payroll.payrollId}</TableCell>
                                     <TableCell>{payroll.employeeId}</TableCell>
                                     <TableCell>{payroll.employeeName}</TableCell>
-                                    <TableCell>{payroll.netPay.toFixed(2)}</TableCell>
-                                    <TableCell>{payroll.benefits.toFixed(2)}</TableCell>
-                                    <TableCell>{payroll.deductions.toFixed(2)}</TableCell>
                                     <TableCell>{payroll.basicSalary.toFixed(2)}</TableCell>
-                                    <TableCell>{(payroll.otHours * payroll.salaryPerHour).toFixed(2)}</TableCell>
+                                    <TableCell>{payroll.allowance.toFixed(2)}</TableCell>
+                                    <TableCell>{payroll.deductions.toFixed(2)}</TableCell>
+                                    <TableCell>{payroll.netPay.toFixed(2)}</TableCell>
+                                    <TableCell>{payroll.payrollDate}</TableCell>
+
                                     <TableCell>
                                         <Button color="primary" onClick={() => handleEdit(payroll)}>Edit</Button>
-                                        <Button color="error" onClick={() => handleDelete(payroll.id)}>Delete</Button>
+                                        <Button color="error" onClick={() => handleDelete(payroll.payrollId)}>Delete</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}

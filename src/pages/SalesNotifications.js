@@ -38,7 +38,7 @@ function SalesNotifications() {
     const fetchNotifications = async () => {
         if (user) {
             try {
-                const response = await axios.get('http://localhost:8080/api/sales-notifications', {
+                const response = await axios.get('http://localhost:8090/api/sales-notifications', {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
                 setNotifications(response.data);
@@ -49,13 +49,13 @@ function SalesNotifications() {
     };
 
     const handleProcessInvoice = (notification) => {
-        navigate('/invoice-entry', { state: { orderId: notification.orderId } });
+        navigate('/invoice-entry', { state: {notification} });
         updateNotificationStatus(notification.id);
     };
 
     const updateNotificationStatus = async (id) => {
         try {
-            await axios.put(`http://localhost:8080/api/sales-notifications/${id}/processed`, { processed: true }, {
+            await axios.put(`http://localhost:8090/api/sales-notifications/${id}/processed`, { processed: true }, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
             fetchNotifications(); // Refresh notifications to reflect the updated status
@@ -66,7 +66,7 @@ function SalesNotifications() {
 
     const handleDeleteNotification = async (id) => {
         try {
-            await axios.delete(`http://localhost:8080/api/sales-notifications/${id}`, {
+            await axios.delete(`http://localhost:8090/api/sales-notifications/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
             setNotifications(notifications.filter(notification => notification.id !== id));

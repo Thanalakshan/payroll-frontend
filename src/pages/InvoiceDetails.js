@@ -50,7 +50,7 @@ function InvoiceDetails() {
     const handleSearch = () => {
         const filteredInvoices = invoices.filter(invoice =>
             invoice.customerId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            invoice.total.toString().toLowerCase().includes(searchTerm.toLowerCase())
+            invoice.orderId.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setInvoices(filteredInvoices);
     };
@@ -69,7 +69,7 @@ function InvoiceDetails() {
                 <Grid container spacing={2} alignItems="center">
                     <Grid item>
                         <TextField
-                            label="Search by Customer ID or Total"
+                            label="Search by Customer ID or Order ID"
                             variant="outlined"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}

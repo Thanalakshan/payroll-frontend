@@ -10,13 +10,14 @@ export const AuthProvider = ({ children }) => {
     const login = async (username, password) => {
         try {
             // Fetch user details by ID
-            const response = await axios.get(`http://localhost:8080/api/users/employee/${username}`);
-            const userDetails = response.data;
+            // const response = await axios.get(`http://localhost:8090/api/user/${username}`);
+            // const userDetails = response.data;
+            const userDetails = {"id":"1","role":"Admin","password":"admin"}
 
             // Verify the password (this should ideally be done on the server to avoid security risks)
             if (userDetails && userDetails.password === password) {
                 const loggedInUser = {
-                    id: userDetails.employeeId,
+                    id: userDetails.id,
                     role: userDetails.role,
                     token: 'fake-jwt-token-for-' + username,  // Simulate a token generation
                 };

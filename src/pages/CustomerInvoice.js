@@ -31,26 +31,45 @@ function CustomerInvoice() {
     const [invoices, setInvoices] = useState([]);
     const { user } = useAuth();
 
+    // useEffect(() => {
+    //     if (user && user.role === 'Customer') {
+    //         fetchInvoicesByCustomerId(user.id);
+    //     }
+    // }, [user]);
+
+    // const fetchInvoicesByCustomerId = async (customerId) => {
+    //     try {
+    //         const response = await axios.get(`http://localhost:8080/api/invoices/customer/${user.Id}`, {
+    //             headers: { Authorization: `Bearer ${user.token}` }
+    //         });
+    //         setInvoices(response.data);
+    //     } catch (error) {
+    //         console.error('Error fetching invoices:', error);
+    //     }
+    // };
+
+
     useEffect(() => {
-        if (user && user.role === 'Customer') {
-            fetchInvoicesByCustomerId(user.id);
+        const fetchInvoices = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8090/api/invoices/customer/${user.id}`, {
+                    headers: { Authorization: `Bearer ${user.token}` }
+                });
+                setInvoices(response.data);
+            } catch (error) {
+                console.error('Error fetching invoices:', error);
+            }
+        };
+
+        if (user) {
+            fetchInvoices();
         }
     }, [user]);
 
-    const fetchInvoicesByCustomerId = async (customerId) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/invoices/customer/${customerId}`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
-            setInvoices(response.data);
-        } catch (error) {
-            console.error('Error fetching invoices:', error);
-        }
-    };
 
     const handleDownload = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/invoices/download/${user.id}`, {
+            const response = await axios.get(`http://localhost:8090/api/invoices/download/${user.id}`, {
                 responseType: 'blob', // Important for handling binary data
                 headers: { Authorization: `Bearer ${user.token}` }
             });
@@ -73,7 +92,6 @@ function CustomerInvoice() {
                             <TableCell>Tax</TableCell>
                             <TableCell>Total</TableCell>
                             <TableCell>Status</TableCell>
-                            <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -85,11 +103,6 @@ function CustomerInvoice() {
                                 <TableCell>{invoice.tax.toFixed(2)}</TableCell>
                                 <TableCell>{invoice.total.toFixed(2)}</TableCell>
                                 <TableCell>{invoice.paymentStatus}</TableCell>
-                                <TableCell>
-                                    <Button onClick={handleDownload} variant="contained" color="primary">
-                                        Download
-                                    </Button>
-                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

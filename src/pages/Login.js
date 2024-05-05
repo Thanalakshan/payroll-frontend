@@ -45,7 +45,7 @@ function Login() {
             <div style={{ padding: 20, maxWidth: 400, margin: '0 auto', backgroundColor: theme.palette.background.default }}>
                 <TextField
                     fullWidth
-                    label="Employee ID"
+                    label="Username"
                     variant="outlined"
                     value={credentials.username}
                     onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}

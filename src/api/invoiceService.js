@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/api/invoices'; // Base URL for invoice API
+const BASE_URL = 'http://localhost:8090/api/invoices'; // Base URL for invoice API
 
 // Create an invoice entry
 export const createInvoice = (invoiceData) => {

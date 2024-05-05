@@ -28,7 +28,7 @@ const theme = createTheme({
 });
 
 
-function Notifications() {
+function PayrollNotifications() {
     const [notifications, setNotifications] = useState([]);
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ function Notifications() {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/notifications', {
+                const response = await axios.get('http://localhost:8090/api/notifications', {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
                 setNotifications(response.data);
@@ -51,15 +51,15 @@ function Notifications() {
     }, [user]);
 
     const handleProcessPayroll = (notification) => {
-        navigate('/payroll-entry', { state: { employeeId: notification.employeeId } });
+        navigate('/payroll-entry', { state: { notification } });
     };
 
     const handleDeleteNotification = async (id) => {
         try {
-            await axios.delete(`http://localhost:8080/api/notifications/${id}`, {
+            await axios.delete(`http://localhost:8090/api/notifications/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
-            setNotifications(notifications.filter(notification => notification.id !== id));
+            setNotifications(notifications.filter(notification => notification.notificationId !== id));
         } catch (error) {
             console.error('Error deleting notification:', error);
         }
@@ -73,6 +73,7 @@ function Notifications() {
                     <Table>
                         <TableHead>
                             <TableRow>
+                                 {/* <TableCell style={{ color: theme.palette.text.secondary }}>Notification ID</TableCell> */}
                                 <TableCell style={{ color: theme.palette.text.secondary }}>Employee ID</TableCell>
                                 <TableCell style={{ color: theme.palette.text.secondary }}>Processed Status</TableCell>
                                 <TableCell style={{ color: theme.palette.text.secondary }}>Actions</TableCell>
@@ -80,7 +81,8 @@ function Notifications() {
                         </TableHead>
                         <TableBody>
                             {notifications.map((notification) => (
-                                <TableRow key={notification.id}>
+                                <TableRow key={notification.notificationId}>
+                                    {/* <TableCell>{notification.notificationId}</TableCell> */}
                                     <TableCell>{notification.employeeId}</TableCell>
                                     <TableCell>{notification.processed ? "Processed" : "Pending"}</TableCell>
                                     <TableCell>
@@ -95,7 +97,7 @@ function Notifications() {
                                         <Button
                                             variant="contained"
                                             color="secondary"
-                                            onClick={() => handleDeleteNotification(notification.id)}
+                                            onClick={() => handleDeleteNotification(notification.notificationId)}
                                             style={{ marginLeft: '10px' }}
                                         >
                                             Delete
@@ -111,4 +113,4 @@ function Notifications() {
     );
 }
 
-export default Notifications;
+export default PayrollNotifications;

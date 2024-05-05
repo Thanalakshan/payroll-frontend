@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/api/payroll'; // Base URL for payroll API
+const BASE_URL = 'http://localhost:8090/api/payroll'; // Base URL for payroll API
 
 // Create payroll entry
 export const createPayroll = (payrollData) => {

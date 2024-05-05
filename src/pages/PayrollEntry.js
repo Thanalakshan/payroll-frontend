@@ -34,12 +34,13 @@ function PayrollEntry() {
         employeeName: '',
         basicSalary: '',
         otHours: '',
-        salaryPerHour: '',
-        workingHours: '',
+        workingDays: '',
         taxPercentage: '',
         deductions: '',
-        benefits: '',
+        allowance: '',
         payrollDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
+        payrollStartDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
+        payrollEndDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
         netPay: ''
     });
     const [open, setOpen] = useState(false);
@@ -48,15 +49,15 @@ function PayrollEntry() {
     useEffect(() => {
         if (location.state && location.state.payroll) {
             const { payroll } = location.state;
-            setFormData({ ...formData, ...payroll });
+            setFormData({ ...formData, ...payroll, payrollId : payroll.payrollId });
         }
     }, [location]);
 
 
     useEffect(() => {
-        if (location.state && location.state.employeeId) {
-            const { employeeId } = location.state;
-            setFormData({ ...formData, employeeId });
+        if (location.state && location.state.notification) {
+            const { notification } = location.state;
+            setFormData({ ...formData, employeeId : notification.employeeId, notificationId : notification.notificationId});
         }
     }, [location.state]);
 
@@ -68,7 +69,7 @@ function PayrollEntry() {
             return;
         }
 
-        const url = formData.id ? `http://localhost:8080/api/payroll/${formData.id}` : 'http://localhost:8080/api/payroll';
+        const url = formData.id ? `http://localhost:8090/api/payroll/${formData.id}` : 'http://localhost:8090/api/payroll';
         const method = formData.id ? 'put' : 'post';
 
         try {
@@ -83,12 +84,13 @@ function PayrollEntry() {
                 employeeName: '',
                 basicSalary: '',
                 otHours: '',
-                salaryPerHour: '',
-                workingHours: '',
+                workingDays: '',
                 taxPercentage: '',
                 deductions: '',
-                benefits: '',
-                payrollDate: new Date().toISOString().slice(0, 10),
+                allowance: '',
+                payrollDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
+                payrollStartDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
+                payrollEndDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
                 netPay: ''
             }); // Reset the form data
             navigate('/payroll-details'); // Navigate back to the details view
@@ -108,16 +110,18 @@ function PayrollEntry() {
             return;
         }
         try {
-            const response = await axios.get(`http://localhost:8080/api/employees/${formData.employeeId}`);
+            const response = await axios.get(`http://localhost:8090/hr/employ/getEmploy/${formData.employeeId}`);
             if (response.data) {
-                const { id, name, salaryPerHour, otRate, otHours, workingHours } = response.data;
+                const { firstName, lastName, nicNo,birthDay,mobileNo,gender,email,isMarried, position,division,
+                userId, recruitedDate,salary,allowance,otRate, workingDays,courseLevel,address} = response.data;
                 setFormData({
                     ...formData,
-                    employeeName: name,
-                    salaryPerHour: salaryPerHour,
-                    otHours: otHours,
-                    basicSalary: (salaryPerHour * workingHours),
-                    workingHours: workingHours
+                    employeeId :userId,
+                    employeeName: firstName + lastName,
+                    basicSalary : salary,
+                    otHours: otRate,
+                    workingDays: workingDays,
+                    allowance : allowance,
                 });
             } else {
                 setAlert('Employee ID not found');
@@ -131,7 +135,7 @@ function PayrollEntry() {
     };
 
     const sendConfirmationToHR = async (payrollData) => {
-        await axios.post('http://localhost:8080/api/hr-system/confirm', payrollData, {
+        await axios.post('http://localhost:8090/api/hr-system/confirm', payrollData, {
         });
     };
 
@@ -155,7 +159,7 @@ function PayrollEntry() {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:8080/api/payroll', formData);
+            const response = await axios.post('http://localhost:8090/api/payroll', formData);
             setAlert('Payroll saved successfully!');
             setOpen(true);
             console.log('Payroll saved:', response.data);
@@ -165,6 +169,49 @@ function PayrollEntry() {
             console.error('Error saving payroll:', error);
         }
     };
+
+    const handleUpdate = async () => {
+        if (!formData.employeeId || !formData.employeeName || !formData.netPay) {
+            setAlert('Please fill out all fields before saving');
+            setOpen(true);
+            return;
+        }
+        try {
+            const response = await axios.put(`http://localhost:8090/api/payroll/${formData.payrollId}`, formData);
+            setAlert('Payroll updated successfully!');
+            setOpen(true);
+            console.log('Payroll updated:', response.data);
+        } catch (error) {
+            setAlert('Failed to update payroll');
+            setOpen(true);
+            console.error('Error updating payroll:', error);
+        }
+    };
+
+    const handleStatus = async () => {
+        try {
+            const payload = {
+                "processed": true
+              };  // Wrapping the boolean value in an object
+            const response = await axios.put(
+                `http://localhost:8090/api/notifications/${formData.notificationId}/processed`,
+                payload,  // Passing the object as the payload
+                {
+                    headers: {
+                        'Content-Type': 'application/json'  // Ensuring JSON content type
+                    }
+                }
+            );
+            setAlert('Notification status updated successfully!');
+            setOpen(true);
+            console.log('Notification status updated:', response.data);
+        } catch (error) {
+            setAlert('Failed to update Notification status');
+            setOpen(true);
+            console.error('Error updating Notification status:', error);
+        }
+    };
+    
 
     const handleClose = () => {
         setOpen(false);
@@ -177,12 +224,13 @@ function PayrollEntry() {
             employeeName: '',
             basicSalary: '',
             otHours: '',
-            salaryPerHour: '',
-            workingHours: '',
+            workingDays: '',
             taxPercentage: '',
             deductions: '',
-            benefits: '',
-            payrollDate: new Date().toISOString().slice(0, 10), // reset to today's date
+            allowance: '',
+            payrollDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
+            payrollStartDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
+            payrollEndDate: new Date().toISOString().slice(0, 10), // format to YYYY-MM-DD
             netPay: ''
         });
     };
@@ -223,7 +271,8 @@ function PayrollEntry() {
                             Net Pay: {formData.netPay.toFixed(2)}
                         </Typography>
                     )}
-                    <Button onClick={handleSave} color="secondary" variant="contained" style={{ marginTop: '20px' }}>Save</Button>
+                    <Button onClick={handleSave && handleStatus} color="secondary" variant="contained" style={{ marginTop: '20px' }}>Save</Button>
+                    <Button onClick={handleUpdate} color="primary" variant="contained" style={{ marginTop: '20px', marginLeft: '10px' }}>Update</Button>
                     <Button onClick={handleClear} color="primary" variant="contained" style={{ marginTop: '20px', marginLeft: '10px' }}>Clear</Button>
 
                 </form>
