@@ -88,7 +88,7 @@ function Payslip() {
                                 <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.employeeName}</TableCell>
                                 <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.basicSalary.toFixed(2)}</TableCell>
                                 {/* <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.grosspay}</TableCell> */}
-                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.netay.toFixed(2)}</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.netPay.toFixed(2)}</TableCell>
                                 <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.payrollDate}</TableCell>
                                 <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.payrollStartDate}</TableCell>
                                 <TableCell style={{ color: theme.palette.text.secondary }}>{payslip.payrollEndDate}</TableCell>

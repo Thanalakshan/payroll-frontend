@@ -120,7 +120,7 @@ function App() {
                     <Routes>
                         {/* Authentication */}
                         <Route path="/login" element={<Login />} />
-                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/" element={<PrivateRoute allowedRoles={['Admin']}><Dashboard /></PrivateRoute>} />
                         {/* Payroll Tab Routes */}
                         <Route path="/payroll-entry" element={<PrivateRoute allowedRoles={['Admin']}><PayrollEntry /></PrivateRoute>} />
                         <Route path="/payroll-details" element={<PrivateRoute allowedRoles={['Admin']}><PayrollDetails /></PrivateRoute>} />

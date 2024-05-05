@@ -108,21 +108,28 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Grid } from '@mui/material';
+import { Button, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Grid } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#124E66',
-    },
-    secondary: {
-      main: '#748D92',
-    },
-    background: {
-      default: '#E2E2E2',
-      paper: '#FFFFFF',
-    },
+      primary: {
+          main: '#124E66', // Dark blue for primary elements
+      },
+      secondary: {
+          main: '#748D92', // Medium gray-blue for secondary elements
+      },
+      error: {
+          main: '#E53935', // Red for error states
+      },
+      background: {
+          default: '#E2E2E2', // Light gray for background
+          paper: '#FFFFFF', // White for paper elements
+      },
+      text: {
+          primary: '#212A31', // Dark blue for text
+          secondary: '#2E3944', // Slightly lighter blue for secondary text
+      }
   },
 });
 
@@ -164,19 +171,19 @@ function Dashboard() {
           <Grid item xs={12} sm={4}>
             <Paper sx={{ padding: 2, textAlign: 'center' }}>
               <Typography variant="h6">Balance</Typography>
-              <Typography variant="subtitle1">${summary.balance.toFixed(2)}</Typography>
+              <Typography variant="subtitle1">Rs.{summary.balance.toFixed(2)}</Typography>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Paper sx={{ padding: 2, textAlign: 'center' }}>
               <Typography variant="h6">Income</Typography>
-              <Typography variant="subtitle1">${summary.income.toFixed(2)}</Typography>
+              <Typography variant="subtitle1">Rs.{summary.income.toFixed(2)}</Typography>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Paper sx={{ padding: 2, textAlign: 'center' }}>
               <Typography variant="h6">Expenses</Typography>
-              <Typography variant="subtitle1">${summary.expenses.toFixed(2)}</Typography>
+              <Typography variant="subtitle1">Rs.{summary.expenses.toFixed(2)}</Typography>
             </Paper>
           </Grid>
 
@@ -206,6 +213,9 @@ function Dashboard() {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
+                    Download Excel
+              </Button>
           </Grid>
         </Grid>
       </Box>
