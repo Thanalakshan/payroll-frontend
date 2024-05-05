@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TableContainer , Container} from '@mui/material';
 import FileDownload from 'js-file-download';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -22,7 +22,7 @@ const theme = createTheme({
         },
         text: {
             primary: '#212A31', // Dark blue for main text
-            secondary: '#2E3944', // Lighter blue for secondary text
+            secondary: '#FFFFFF', // Lighter blue for secondary text
         }
     },
 });
@@ -81,17 +81,18 @@ function CustomerInvoice() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Paper style={{ margin: '20px', padding: '20px', backgroundColor: theme.palette.background.paper }}>
+            <Container style={{ marginTop: '20px', padding: '20px', backgroundColor: theme.palette.background.paper }}>
                 <Typography variant="h6" style={{ color: theme.palette.text.primary, margin: '10px 0' }}>Your Invoices</Typography>
+                <TableContainer component={Paper} style={{ marginTop: '20px' }}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Invoice ID</TableCell>
-                            <TableCell>Subtotal</TableCell>
-                            <TableCell>Tax</TableCell>
-                            <TableCell>Total</TableCell>
-                            <TableCell>Status</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Date</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Invoice ID</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Subtotal</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Tax</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Total</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -107,10 +108,11 @@ function CustomerInvoice() {
                         ))}
                     </TableBody>
                 </Table>
+                </TableContainer>
                 <Button onClick={handleDownload} variant="contained" color="primary" style={{ marginTop: '20px' }}>
                     Download Excel
                 </Button>
-            </Paper>
+            </Container>
         </ThemeProvider>
     );
 }

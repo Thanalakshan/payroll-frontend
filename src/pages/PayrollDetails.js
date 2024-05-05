@@ -22,7 +22,7 @@ const theme = createTheme({
     },
     text: {
       primary: '#212A31', // Dark blue, good contrast against the lighter backgrounds
-      secondary: '#2E3944', // Secondary text color, slightly lighter
+      secondary: '#FFFFFF', // Secondary text color, slightly lighter
     }
   },
 });
@@ -93,15 +93,15 @@ function PayrollDetails() {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Payroll ID</TableCell>
-                                <TableCell>Employee ID</TableCell>
-                                <TableCell>Employee Name</TableCell>
-                                <TableCell>Basic Salary</TableCell>
-                                <TableCell>Allowance</TableCell>
-                                <TableCell>Deductions</TableCell>
-                                <TableCell>Net Pay</TableCell>
-                                <TableCell>Payroll Date</TableCell>
-                                <TableCell>Actions</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }} >Payroll ID</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Employee ID</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Employee Name</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Basic Salary</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Allowance</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Deductions</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Net Pay</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Payroll Date</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

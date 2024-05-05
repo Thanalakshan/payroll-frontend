@@ -21,7 +21,7 @@ const theme = createTheme({
         },
         text: {
             primary: '#212A31', // Dark blue for text
-            secondary: '#2E3944', // Slightly lighter blue for secondary text
+            secondary: '#FFFFFF', // Slightly lighter blue for secondary text
         }
     },
 });
@@ -92,14 +92,14 @@ function InvoiceDetails() {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Invoice ID</TableCell>
-                                <TableCell>Order ID</TableCell>
-                                <TableCell>Customer ID</TableCell>
-                                <TableCell>Subtotal</TableCell>
-                                <TableCell>Tax</TableCell>
-                                <TableCell>Total</TableCell>
-                                <TableCell>Payment Status</TableCell>
-                                <TableCell>Actions</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Invoice ID</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Order ID</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Customer ID</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Subtotal</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Tax</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Total</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Payment Status</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

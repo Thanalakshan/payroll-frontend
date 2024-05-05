@@ -110,6 +110,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Grid } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import FileDownload from 'js-file-download';
+import { useAuth } from '../context/AuthContext';
 
 const theme = createTheme({
   palette: {
@@ -128,7 +130,7 @@ const theme = createTheme({
       },
       text: {
           primary: '#212A31', // Dark blue for text
-          secondary: '#2E3944', // Slightly lighter blue for secondary text
+          secondary: '#FFFFFF', // Slightly lighter blue for secondary text
       }
   },
 });
@@ -140,6 +142,9 @@ function Dashboard() {
     income: 0,
     expenses: 0,
   });
+
+  const { user } = useAuth();
+
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -162,6 +167,19 @@ function Dashboard() {
     const balance = income - expenses;
     setSummary({ balance, income, expenses });
   };
+
+  const handleDownload = async () => {
+    try {
+        const response = await axios.get(`http://localhost:8090/api/transactions/download`, {
+            responseType: 'blob', // Important for handling binary data
+            headers: { Authorization: `Bearer ${user.token}` }
+        });
+        FileDownload(response.data, 'transactions.xlsx');
+    } catch (error) {
+        console.error('Error downloading transactions:', error);
+    }
+};
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -193,27 +211,29 @@ function Dashboard() {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Transaction ID</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Income</TableCell>
-                    <TableCell>Expense</TableCell>
+                    <TableCell style={{ color: theme.palette.text.secondary }}>Transaction ID</TableCell>
+                    <TableCell style={{ color: theme.palette.text.secondary }}>Income</TableCell>
+                    <TableCell style={{ color: theme.palette.text.secondary }}>Expense</TableCell>
+                    <TableCell style={{ color: theme.palette.text.secondary }}>Balance</TableCell>
+                    <TableCell style={{ color: theme.palette.text.secondary }}>Transaction Date</TableCell>
+                    <TableCell style={{ color: theme.palette.text.secondary }}>Reference ID</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {transactions.map((transaction) => (
                     <TableRow key={transaction.transactionId}>
-                      <TableCell>{new Date(transaction.transactionDate).toLocaleDateString()}</TableCell>
                       <TableCell>{transaction.transactionId}</TableCell>
-                      <TableCell>{transaction.transactionType}</TableCell>
-                      <TableCell>${transaction.income.toFixed(2)}</TableCell>
-                      <TableCell>${transaction.expense.toFixed(2)}</TableCell>
+                      <TableCell>Rs.{transaction.income.toFixed(2)}</TableCell>
+                      <TableCell>Rs.{transaction.expense.toFixed(2)}</TableCell>
+                      <TableCell>Rs.{transaction.balance.toFixed(2)}</TableCell>
+                      <TableCell>{new Date(transaction.transactionDate).toLocaleDateString()}</TableCell>
+                      <TableCell>{transaction.referenceId}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
-            <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
+            <Button onClick={handleDownload} variant="contained" color="primary" style={{ marginTop: '20px' }}>
                     Download Excel
               </Button>
           </Grid>

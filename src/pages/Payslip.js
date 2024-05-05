@@ -24,7 +24,7 @@ const theme = createTheme({
         },
         text: {
             primary: '#212A31', // Dark blue for main text
-            secondary: '#2E3944', // Lighter blue for secondary text
+            secondary: '#FFFFFF', // Lighter blue for secondary text
         }
     },
 });
@@ -69,15 +69,15 @@ function Payslip() {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Payroll ID</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Employee ID</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Employee Name</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Basic Salary</TableCell>
-                            {/* <TableCell style={{ color: theme.palette.text.primary }}>Gross Pay</TableCell> */}
-                            <TableCell style={{ color: theme.palette.text.primary }}>Net Pay</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Payroll Date</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Payroll Start Date</TableCell>
-                            <TableCell style={{ color: theme.palette.text.primary }}>Payroll End Date</TableCell>     
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Payroll ID</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Employee ID</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Employee Name</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Basic Salary</TableCell>
+                            {/* <TableCell style={{ color: theme.palette.tsecondarymary }}>Gross Pay</TableCell> */}
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Net Pay</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Payroll Date</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Payroll Start Date</TableCell>
+                            <TableCell style={{ color: theme.palette.text.secondary }}>Payroll End Date</TableCell>     
                         </TableRow>
                     </TableHead>
                     <TableBody>

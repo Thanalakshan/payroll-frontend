@@ -22,7 +22,7 @@ const theme = createTheme({
         },
         text: {
             primary: '#212A31', // Dark blue, good contrast against the lighter backgrounds
-            secondary: '#2E3944', // Secondary text color, slightly lighter
+            secondary: '#FFFFFF', // Secondary text color, slightly lighter #2E3944
         }
     },
 });
@@ -83,9 +83,9 @@ function SalesNotifications() {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Order ID</TableCell>
-                                <TableCell>Status</TableCell>
-                                <TableCell>Actions</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Order ID</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Status</TableCell>
+                                <TableCell style={{ color: theme.palette.text.secondary }}>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

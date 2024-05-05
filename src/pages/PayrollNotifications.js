@@ -22,7 +22,7 @@ const theme = createTheme({
       },
       text: {
         primary: '#212A31', // Dark blue, good contrast against the lighter backgrounds
-        secondary: '#2E3944', // Secondary text color, slightly lighter
+        secondary: '#FFFFFF', // Secondary text color, slightly lighter
       }
     },
 });
